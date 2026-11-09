@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrendStyle - Thời Trang & Phong Cách Sống | SOA Platform</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-dark text-white text-center py-2 small fw-semibold" style="letter-spacing: 1px;">
+    MIỄN PHÍ VẬN CHUYỂN TOÀN QUỐC CHO ĐƠN HÀNG TỪ 500.000Đ | BỘ SƯU TẬP THU ĐÔNG 2026
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom py-3">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Trend<span>Style</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.html">Cửa hàng</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.html?gender=women">Nữ</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.html?gender=men">Nam</a></li>
+          <li class="nav-item"><a class="nav-link" href="news.html">Xu Hướng & Tạp Chí</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center">
+          <a href="cart.html" class="btn btn-link text-dark position-relative me-3 p-0 fs-5">
+            <i class="bi bi-bag"></i>
+            <span id="cartCountBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark" style="font-size: 0.65rem; display:none;">0</span>
+          </a>
+          <div id="navUserArea"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero-section">
+    <div class="container text-center">
+      <p class="hero-subtitle mb-2">Đón đầu phong cách mới 2026</p>
+      <h1 class="hero-title mb-4">MINIMALIST & MODERN ELEGANCE</h1>
+      <p class="lead mb-4 mx-auto text-light" style="max-width: 650px;">
+        Khám phá bộ sưu tập thời trang cao cấp với phom dáng tối giản, chất liệu bền vững và vẻ đẹp trường tồn cùng thời gian.
+      </p>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="products.html" class="btn btn-trend">Khám phá ngay</a>
+        <a href="news.html" class="btn btn-outline-light btn-trend-outline border-white text-white">Xem xu hướng</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Categories Grid -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="text-muted text-uppercase fw-bold small" style="letter-spacing: 2px;">Danh Mục Nổi Bật</span>
+        <h2 class="fw-bold mt-1">LỰA CHỌN PHONG CÁCH</h2>
+      </div>
+
+      <div class="row g-4" id="categoryContainer">
+        <!-- Render động danh mục -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="py-5">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+          <span class="text-muted text-uppercase fw-bold small" style="letter-spacing: 2px;">Sản Phẩm Mới</span>
+          <h2 class="fw-bold mt-1 mb-0">THỜI TRANG ĐƯỢC YÊU THÍCH</h2>
+        </div>
+        <a href="products.html" class="text-dark fw-bold text-decoration-none">Xem tất cả <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="row g-4" id="featuredProductsContainer">
+        <!-- Render động sản phẩm -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Fashion News & Trends Section -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+          <span class="text-muted text-uppercase fw-bold small" style="letter-spacing: 2px;">Tạp Chí TrendStyle</span>
+          <h2 class="fw-bold mt-1 mb-0">BÀI VIẾT XU HƯỚNG MỚI</h2>
+        </div>
+        <a href="news.html" class="text-dark fw-bold text-decoration-none">Khám phá tạp chí <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="row g-4" id="homeNewsContainer">
+        <!-- Render động bài viết tin tức -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Value Propositions Banner -->
+  <section class="py-5 border-top border-bottom bg-white">
+    <div class="container">
+      <div class="row g-4 text-center">
+        <div class="col-md-3">
+          <i class="bi bi-truck fs-1 text-dark mb-2"></i>
+          <h6 class="fw-bold mb-1">Giao Hàng Miễn Phí</h6>
+          <p class="text-muted small mb-0">Đơn hàng từ 500.000đ toàn quốc</p>
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-arrow-repeat fs-1 text-dark mb-2"></i>
+          <h6 class="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
+          <p class="text-muted small mb-0">Hỗ trợ đổi size trong 7 ngày</p>
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-shield-check fs-1 text-dark mb-2"></i>
+          <h6 class="fw-bold mb-1">Chính Hãng 100%</h6>
+          <p class="text-muted small mb-0">Cam kết chất liệu cao cấp nhất</p>
+        </div>
+        <div class="col-md-3">
+          <i class="bi bi-headset fs-1 text-dark mb-2"></i>
+          <h6 class="fw-bold mb-1">Hỗ Trợ 24/7</h6>
+          <p class="text-muted small mb-0">Tư vấn viên phong cách tận tâm</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <a class="navbar-brand text-white mb-3 d-inline-block" href="index.html">Trend<span style="color:#c8a165">Style</span></a>
+          <p class="small text-secondary mb-3">
+            Nền tảng thương mại điện tử và tạp chí thời trang xây dựng theo kiến trúc hướng dịch vụ (SOA / RESTful API).
+          </p>
+          <div class="text-light small">
+            <div><i class="bi bi-mortarboard me-2"></i><strong>Học viện Công nghệ Bưu chính Viễn thông</strong></div>
+            <div><i class="bi bi-person me-2"></i>Sinh viên: <strong>Phạm Văn Thái</strong> - MSV: <strong>B25DTCN298</strong></div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-6">
+          <h6>Khám Phá</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="products.html">Bộ sưu tập mới</a></li>
+            <li class="mb-2"><a href="products.html?gender=women">Thời trang Nữ</a></li>
+            <li class="mb-2"><a href="products.html?gender=men">Thời trang Nam</a></li>
+            <li class="mb-2"><a href="news.html">Tạp chí phong cách</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-6">
+          <h6>Dịch Vụ Khách Hàng</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="orders.html">Tra cứu đơn hàng</a></li>
+            <li class="mb-2"><a href="#">Chính sách đổi trả</a></li>
+            <li class="mb-2"><a href="#">Hướng dẫn chọn size</a></li>
+            <li class="mb-2"><a href="#">Chính sách bảo mật</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <h6>Đăng Ký Nhận Bản Tin</h6>
+          <p class="small text-secondary mb-2">Nhận thông báo ưu đãi và xu hướng thời trang sớm nhất.</p>
+          <div class="input-group">
+            <input type="email" class="form-control form-control-sm rounded-0 border-0" placeholder="Email của bạn...">
+            <button class="btn btn-warning rounded-0 px-3 fw-bold btn-sm" type="button">GỬI</button>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="text-center small text-secondary">
+        &copy; 2026 TrendStyle Platform - Đồ án môn học Phát triển phần mềm hướng dịch vụ (PTIT).
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/mock_data.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      // 1. Render Categories
+      const catContainer = document.getElementById("categoryContainer");
+      if (catContainer) {
+        catContainer.innerHTML = MOCK_CATEGORIES.slice(0, 3).map(c => `
+          <div class="col-md-4">
+            <div class="category-box">
+              <img src="${c.image_url}" alt="${c.name}">
+              <div class="category-overlay">
+                <h4 class="fw-bold mb-2">${c.name}</h4>
+                <a href="products.html?category=${c.id}" class="btn btn-sm btn-outline-light rounded-0 px-3 py-1">Xem BST</a>
+              </div>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      // 2. Render Featured Products
+      const prodContainer = document.getElementById("featuredProductsContainer");
+      if (prodContainer) {
+        prodContainer.innerHTML = MOCK_PRODUCTS.slice(0, 4).map(p => `
+          <div class="col-lg-3 col-md-6">
+            <div class="product-card h-100">
+              <div class="product-img-wrapper">
+                <img src="${p.thumbnail}" alt="${p.name}">
+                ${p.discount_price ? `<span class="badge-discount">GIẢM GIÁ</span>` : ''}
+              </div>
+              <div class="product-info">
+                <span class="product-category">${p.category_name}</span>
+                <h3 class="product-title">
+                  <a href="product-detail.html?id=${p.id}">${p.name}</a>
+                </h3>
+                <div class="star-rating mb-2">
+                  <i class="bi bi-star-fill"></i> ${p.avg_rating} <span class="text-muted small">(${p.review_count})</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <div>
+                    <span class="price-current">${AppUI.formatMoney(p.discount_price || p.price)}</span>
+                    ${p.discount_price ? `<span class="price-original">${AppUI.formatMoney(p.price)}</span>` : ''}
+                  </div>
+                  <button class="btn btn-outline-dark btn-sm rounded-0" onclick="AppCart.addItem(${p.id})">
+                    <i class="bi bi-bag-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      // 3. Render News
+      const newsContainer = document.getElementById("homeNewsContainer");
+      if (newsContainer) {
+        newsContainer.innerHTML = MOCK_NEWS.slice(0, 3).map(n => `
+          <div class="col-md-4">
+            <div class="news-card">
+              <img src="${n.thumbnail}" class="news-img" alt="${n.title}">
+              <div class="p-3">
+                <span class="news-tag">${n.category_tag}</span>
+                <h5 class="fw-bold mt-1 mb-2" style="font-size:1.1rem; height:2.8rem; overflow:hidden;">
+                  <a href="news-detail.html?id=${n.id}" class="text-dark text-decoration-none">${n.title}</a>
+                </h5>
+                <p class="text-muted small mb-3" style="height:3rem; overflow:hidden;">${n.summary}</p>
+                <div class="d-flex justify-content-between align-items-center border-top pt-2 small text-secondary">
+                  <span><i class="bi bi-chat me-1"></i> ${n.comment_count} bình luận</span>
+                  <a href="news-detail.html?id=${n.id}" class="fw-bold text-dark text-decoration-none">Đọc tiếp &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join("");
+      }
+    });
+  </script>
+</body>
+</html>

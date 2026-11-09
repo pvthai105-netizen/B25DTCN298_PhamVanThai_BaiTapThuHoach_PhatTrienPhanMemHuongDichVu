@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xu Hướng & Tạp Chí Thời Trang | TrendStyle</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="bg-dark text-white text-center py-2 small fw-semibold">
+    TẠP CHÍ XU HƯỚNG THỜI TRANG & CẨM NANG PHONG CÁCH 2026
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom py-3">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Trend<span>Style</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.html">Cửa hàng</a></li>
+          <li class="nav-item"><a class="nav-link active" href="news.html">Xu Hướng & Tạp Chí</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center">
+          <a href="cart.html" class="btn btn-link text-dark position-relative me-3 p-0 fs-5">
+            <i class="bi bi-bag"></i>
+            <span id="cartCountBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark" style="font-size: 0.65rem; display:none;">0</span>
+          </a>
+          <div id="navUserArea"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="bg-light py-5 border-bottom mb-4 text-center">
+    <div class="container">
+      <span class="text-muted text-uppercase small fw-bold" style="letter-spacing: 2px;">TrendStyle Editorial</span>
+      <h2 class="fw-bold mt-1">XU HƯỚNG & PHONG CÁCH SỐNG</h2>
+      <p class="text-secondary mx-auto mb-0" style="max-width: 600px;">
+        Nơi cập nhật những góc nhìn thời trang mới nhất, nghệ thuật phối đồ và cảm hứng phong cách đương đại.
+      </p>
+    </div>
+  </div>
+
+  <!-- News List Container -->
+  <div class="container mb-5">
+    <!-- Category Tabs -->
+    <div class="d-flex justify-content-center gap-2 mb-4 flex-wrap">
+      <button class="btn btn-outline-dark btn-sm rounded-0 active px-3" onclick="filterNews('all', this)">Tất cả</button>
+      <button class="btn btn-outline-dark btn-sm rounded-0 px-3" onclick="filterNews('Minimalist', this)">Minimalist</button>
+      <button class="btn btn-outline-dark btn-sm rounded-0 px-3" onclick="filterNews('Thu Đông', this)">Thu Đông</button>
+      <button class="btn btn-outline-dark btn-sm rounded-0 px-3" onclick="filterNews('Streetwear', this)">Streetwear</button>
+    </div>
+
+    <div class="row g-4" id="newsListGrid">
+      <!-- Render danh sách tin tức -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4 mt-auto">
+    <div class="container text-center small text-secondary">
+      &copy; 2026 TrendStyle Platform - Đồ án môn học Phát triển phần mềm hướng dịch vụ (PTIT).
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/mock_data.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    function renderNews(list) {
+      const container = document.getElementById("newsListGrid");
+      container.innerHTML = list.map(n => `
+        <div class="col-lg-4 col-md-6">
+          <div class="news-card">
+            <img src="${n.thumbnail}" class="news-img" alt="${n.title}">
+            <div class="p-4">
+              <span class="news-tag">${n.category_tag}</span>
+              <h4 class="fw-bold mt-2 mb-2" style="font-size: 1.25rem; line-height: 1.4;">
+                <a href="news-detail.html?id=${n.id}" class="text-dark text-decoration-none">${n.title}</a>
+              </h4>
+              <p class="text-muted small mb-3">${n.summary}</p>
+              <div class="d-flex justify-content-between align-items-center border-top pt-3 small text-secondary">
+                <span><i class="bi bi-clock me-1"></i> ${n.created_at}</span>
+                <span><i class="bi bi-chat me-1"></i> ${n.comment_count} bình luận</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function filterNews(tag, btn) {
+      document.querySelectorAll(".btn-outline-dark").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+
+      if (tag === "all") {
+        renderNews(MOCK_NEWS);
+      } else {
+        renderNews(MOCK_NEWS.filter(n => n.category_tag === tag));
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderNews(MOCK_NEWS);
+    });
+  </script>
+</body>
+</html>

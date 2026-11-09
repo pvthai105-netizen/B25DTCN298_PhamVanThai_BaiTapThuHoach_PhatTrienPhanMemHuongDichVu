@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng Điều Khiển Quản Trị | TrendStyle Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+  <!-- Admin Navbar -->
+  <nav class="navbar navbar-dark bg-dark sticky-top py-2">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand fw-bold" href="admin.html">Trend<span>Style</span> <span class="badge bg-secondary ms-2 small">Admin Portal</span></a>
+      <div class="d-flex align-items-center">
+        <a href="index.html" class="btn btn-outline-light btn-sm rounded-0 me-3"><i class="bi bi-box-arrow-up-right me-1"></i> Xem Website</a>
+        <button class="btn btn-danger btn-sm rounded-0" onclick="AppAuth.logout()"><i class="bi bi-box-arrow-right me-1"></i> Đăng xuất</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid px-4 py-4">
+    <h3 class="fw-bold mb-4">TỔNG QUAN HỆ THỐNG SOA TRENDSTYLE</h3>
+
+    <!-- Statistics KPIs -->
+    <div class="row g-4 mb-4">
+      <div class="col-md-3">
+        <div class="card border-0 shadow-sm p-3 bg-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span class="text-muted small fw-bold text-uppercase">Tổng Doanh Thu</span>
+              <h3 class="fw-bold mb-0 text-success" id="statRevenue">3.850.000đ</h3>
+            </div>
+            <i class="bi bi-currency-dollar fs-1 text-success"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card border-0 shadow-sm p-3 bg-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span class="text-muted small fw-bold text-uppercase">Đơn Hàng</span>
+              <h3 class="fw-bold mb-0 text-primary" id="statOrders">5 Đơn</h3>
+            </div>
+            <i class="bi bi-cart-check fs-1 text-primary"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card border-0 shadow-sm p-3 bg-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span class="text-muted small fw-bold text-uppercase">Sản Phẩm Trong Kho</span>
+              <h3 class="fw-bold mb-0 text-warning" id="statProducts">6 Mẫu</h3>
+            </div>
+            <i class="bi bi-tags fs-1 text-warning"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card border-0 shadow-sm p-3 bg-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span class="text-muted small fw-bold text-uppercase">Người Dùng Đăng Ký</span>
+              <h3 class="fw-bold mb-0 text-info" id="statUsers">2 Tài khoản</h3>
+            </div>
+            <i class="bi bi-people fs-1 text-info"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Management Table -->
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+        <h5 class="fw-bold mb-0">Quản Lý Danh Mục Sản Phẩm</h5>
+        <button class="btn btn-dark btn-sm rounded-0" onclick="openAddProductModal()">
+          <i class="bi bi-plus-lg me-1"></i> Thêm Sản Phẩm Mới
+        </button>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light small text-uppercase">
+              <tr>
+                <th>Ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>SKU</th>
+                <th>Danh mục</th>
+                <th>Giá bán</th>
+                <th>Tồn kho</th>
+                <th class="text-end">Hành động</th>
+              </tr>
+            </thead>
+            <tbody id="adminProductsTable">
+              <!-- Render danh sách sản phẩm -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/mock_data.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = AppStorage.getUser();
+      if (!user || user.role !== "admin") {
+        alert("Khu vực dành riêng cho Quản trị viên (Admin)!");
+        window.location.href = "login.html";
+        return;
+      }
+      renderAdminProducts();
+    });
+
+    function renderAdminProducts() {
+      const tbody = document.getElementById("adminProductsTable");
+      tbody.innerHTML = MOCK_PRODUCTS.map(p => `
+        <tr>
+          <td><img src="${p.thumbnail}" style="width: 50px; height: 60px; object-fit: cover;" class="border"></td>
+          <td class="fw-bold small">${p.name}</td>
+          <td class="small text-muted">${p.slug}</td>
+          <td class="small">${p.category_name}</td>
+          <td class="small fw-bold">${AppUI.formatMoney(p.discount_price || p.price)}</td>
+          <td><span class="badge bg-success">${p.stock_quantity} sp</span></td>
+          <td class="text-end">
+            <button class="btn btn-outline-danger btn-sm rounded-0" onclick="deleteProd(${p.id})">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function deleteProd(id) {
+      if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi hệ thống?")) {
+        const idx = MOCK_PRODUCTS.findIndex(p => p.id === id);
+        if (idx !== -1) {
+          MOCK_PRODUCTS.splice(idx, 1);
+          renderAdminProducts();
+          document.getElementById("statProducts").innerText = `${MOCK_PRODUCTS.length} Mẫu`;
+          AppUI.showToast("Đã xóa sản phẩm thành công!");
+        }
+      }
+    }
+
+    function openAddProductModal() {
+      const name = prompt("Nhập tên sản phẩm mới:");
+      if (!name) return;
+      const price = parseFloat(prompt("Nhập giá niêm yết (VNĐ):", "500000")) || 500000;
+      
+      const newP = {
+        id: Date.now(),
+        name: name,
+        slug: "ts-new-" + Date.now(),
+        category_id: 1,
+        category_name: "Áo Sơ Mi & Áo Thun",
+        price: price,
+        discount_price: price * 0.9,
+        stock_quantity: 50,
+        gender: "unisex",
+        is_featured: true,
+        thumbnail: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600",
+        description: "Sản phẩm thời trang thiết kế mới nhất của thương hiệu TrendStyle.",
+        avg_rating: 5.0,
+        review_count: 0
+      };
+      MOCK_PRODUCTS.unshift(newP);
+      renderAdminProducts();
+      document.getElementById("statProducts").innerText = `${MOCK_PRODUCTS.length} Mẫu`;
+      AppUI.showToast("Thêm sản phẩm mới thành công!");
+    }
+  </script>
+</body>
+</html>

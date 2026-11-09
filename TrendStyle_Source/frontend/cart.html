@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giỏ Hàng Của Bạn | TrendStyle</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="bg-dark text-white text-center py-2 small fw-semibold">
+    MIỄN PHÍ VẬN CHUYỂN TOÀN QUỐC CHO ĐƠN HÀNG TỪ 500.000Đ
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom py-3">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Trend<span>Style</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.html">Cửa hàng</a></li>
+          <li class="nav-item"><a class="nav-link" href="news.html">Xu Hướng & Tạp Chí</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center">
+          <a href="cart.html" class="btn btn-link text-dark position-relative me-3 p-0 fs-5">
+            <i class="bi bi-bag"></i>
+            <span id="cartCountBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark" style="font-size: 0.65rem; display:none;">0</span>
+          </a>
+          <div id="navUserArea"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Title -->
+  <div class="bg-light py-4 border-bottom mb-4">
+    <div class="container">
+      <h2 class="fw-bold mb-1">GIỎ HÀNG THỜI TRANG</h2>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0 small">
+          <li class="breadcrumb-item"><a href="index.html" class="text-secondary text-decoration-none">Trang chủ</a></li>
+          <li class="breadcrumb-item active text-dark" aria-current="page">Giỏ hàng</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Cart Content -->
+  <div class="container mb-5">
+    <div class="row g-4" id="cartContentWrapper">
+      <!-- Cột danh sách món hàng -->
+      <div class="col-lg-8">
+        <div class="card border rounded-0 p-3">
+          <div class="table-responsive">
+            <table class="table align-middle mb-0">
+              <thead class="table-light text-uppercase small">
+                <tr>
+                  <th scope="col" style="min-width: 250px;">Sản phẩm</th>
+                  <th scope="col">Đơn giá</th>
+                  <th scope="col" style="min-width: 120px;">Số lượng</th>
+                  <th scope="col">Thành tiền</th>
+                  <th scope="col" class="text-end">Xóa</th>
+                </tr>
+              </thead>
+              <tbody id="cartTableBody">
+                <!-- Render món hàng -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <a href="products.html" class="btn btn-outline-dark rounded-0 btn-sm">
+            <i class="bi bi-arrow-left me-1"></i> Tiếp tục mua sắm
+          </a>
+          <button class="btn btn-outline-danger rounded-0 btn-sm" onclick="clearFullCart()">
+            <i class="bi bi-trash me-1"></i> Xóa toàn bộ giỏ hàng
+          </button>
+        </div>
+      </div>
+
+      <!-- Cột tổng kết đơn hàng -->
+      <div class="col-lg-4">
+        <div class="card border rounded-0 p-4 bg-light">
+          <h5 class="fw-bold border-bottom pb-2 mb-3">TỔNG KẾT ĐƠN HÀNG</h5>
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-secondary">Tạm tính:</span>
+            <span class="fw-bold" id="cartSubtotalText">0đ</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span class="text-secondary">Phí vận chuyển:</span>
+            <span class="fw-bold" id="cartShippingText">0đ</span>
+          </div>
+          <div class="small text-muted mb-3" id="freeShippingNotice">
+            (Miễn phí ship cho đơn từ 500.000đ)
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between mb-4 fs-5">
+            <span class="fw-bold">Tổng thanh toán:</span>
+            <span class="fw-bold text-dark" id="cartTotalText">0đ</span>
+          </div>
+
+          <a href="checkout.html" class="btn btn-dark w-100 rounded-0 py-2 fw-bold text-uppercase">
+            TIẾN HÀNH ĐẶT HÀNG <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4 mt-auto">
+    <div class="container text-center small text-secondary">
+      &copy; 2026 TrendStyle Platform - Đồ án môn học Phát triển phần mềm hướng dịch vụ (PTIT).
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/mock_data.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    function renderCartPage() {
+      const cart = AppStorage.getCart();
+      const tbody = document.getElementById("cartTableBody");
+      const wrapper = document.getElementById("cartContentWrapper");
+
+      if (!cart.items || cart.items.length === 0) {
+        wrapper.innerHTML = `
+          <div class="col-12 text-center py-5">
+            <i class="bi bi-bag-x fs-1 text-muted"></i>
+            <h4 class="mt-3 fw-bold">Giỏ hàng của bạn đang trống</h4>
+            <p class="text-muted">Hãy khám phá các bộ sưu tập thời trang mới nhất của TrendStyle nhé.</p>
+            <a href="products.html" class="btn btn-dark rounded-0 px-4 py-2 mt-2">MUA SẮM NGAY</a>
+          </div>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = cart.items.map(i => `
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <img src="${i.product_thumbnail}" alt="${i.product_name}" class="me-3 border" style="width: 60px; height: 75px; object-fit: cover;">
+              <div>
+                <a href="product-detail.html?id=${i.product_id}" class="text-dark fw-bold text-decoration-none d-block small">${i.product_name}</a>
+                <span class="text-muted small">Size: ${i.selected_size}</span>
+              </div>
+            </div>
+          </td>
+          <td class="small fw-semibold">${AppUI.formatMoney(i.price)}</td>
+          <td>
+            <div class="input-group input-group-sm" style="width: 100px;">
+              <button class="btn btn-outline-secondary" onclick="updateQty(${i.id}, ${i.quantity - 1})">-</button>
+              <input type="text" class="form-control text-center" value="${i.quantity}" readonly>
+              <button class="btn btn-outline-secondary" onclick="updateQty(${i.id}, ${i.quantity + 1})">+</button>
+            </div>
+          </td>
+          <td class="small fw-bold">${AppUI.formatMoney(i.subtotal)}</td>
+          <td class="text-end">
+            <button class="btn btn-link text-danger p-0" onclick="deleteItem(${i.id})">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      `).join("");
+
+      // Tính tổng
+      const subtotal = cart.total_price;
+      const shipping = (subtotal >= 500000 || subtotal === 0) ? 0 : 30000;
+      const total = subtotal + shipping;
+
+      document.getElementById("cartSubtotalText").innerText = AppUI.formatMoney(subtotal);
+      document.getElementById("cartShippingText").innerText = shipping === 0 ? "Miễn phí" : AppUI.formatMoney(shipping);
+      document.getElementById("cartTotalText").innerText = AppUI.formatMoney(total);
+      
+      const freeShipNotice = document.getElementById("freeShippingNotice");
+      if (subtotal >= 500000) {
+        freeShipNotice.innerHTML = `<span class="text-success"><i class="bi bi-check-circle me-1"></i>Bạn đã được miễn phí vận chuyển!</span>`;
+      } else {
+        freeShipNotice.innerText = `Mua thêm ${AppUI.formatMoney(500000 - subtotal)} để được MIỄN PHÍ SHIP`;
+      }
+    }
+
+    function updateQty(itemId, newQty) {
+      if (newQty < 1) {
+        deleteItem(itemId);
+        return;
+      }
+      AppCart.updateQuantity(itemId, newQty);
+      renderCartPage();
+    }
+
+    function deleteItem(itemId) {
+      AppCart.removeItem(itemId);
+      renderCartPage();
+    }
+
+    function clearFullCart() {
+      if (confirm("Bạn có chắc chắn muốn xóa tất cả sản phẩm khỏi giỏ hàng?")) {
+        AppStorage.setCart({ items: [], total_quantity: 0, total_price: 0 });
+        renderCartPage();
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderCartPage();
+    });
+  </script>
+</body>
+</html>

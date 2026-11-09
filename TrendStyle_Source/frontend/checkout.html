@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh Toán Đơn Hàng | TrendStyle</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-light bg-white border-bottom py-3">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Trend<span>Style</span></a>
+      <span class="text-uppercase small fw-bold text-muted"><i class="bi bi-shield-lock me-1"></i> Thanh toán an toàn SSL</span>
+    </div>
+  </nav>
+
+  <!-- Checkout Container -->
+  <div class="container py-5">
+    <form id="checkoutForm" onsubmit="handlePlaceOrder(event)">
+      <div class="row g-5">
+        <!-- Thông tin giao hàng -->
+        <div class="col-lg-7">
+          <h4 class="fw-bold mb-4">THÔNG TIN GIAO HÀNG</h4>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-uppercase">Họ và tên người nhận *</label>
+            <input type="text" id="custName" class="form-control rounded-0" required placeholder="Ví dụ: Phạm Văn Thái">
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-uppercase">Số điện thoại *</label>
+              <input type="tel" id="custPhone" class="form-control rounded-0" required placeholder="0912345678">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-uppercase">Địa chỉ Email</label>
+              <input type="email" id="custEmail" class="form-control rounded-0" placeholder="thai.pham@student.ptit.edu.vn">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-uppercase">Địa chỉ nhận hàng chi tiết *</label>
+            <input type="text" id="custAddress" class="form-control rounded-0" required placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố">
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label small fw-bold text-uppercase">Ghi chú giao hàng</label>
+            <textarea id="custNote" class="form-control rounded-0" rows="2" placeholder="Ghi chú thêm về thời gian nhận hàng, chỉ dẫn giao..."></textarea>
+          </div>
+
+          <h5 class="fw-bold mb-3 border-top pt-4">PHƯƠNG THỨC THANH TOÁN</h5>
+          <div class="border rounded-0 p-3 mb-3">
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="payCOD" value="cod" checked>
+              <label class="form-check-label fw-bold" for="payCOD">
+                <i class="bi bi-cash me-2"></i> Thanh toán khi nhận hàng (COD)
+              </label>
+              <p class="small text-muted mb-0 ms-4">Thanh toán bằng tiền mặt trực tiếp cho nhân viên bưu tá khi nhận kiện hàng.</p>
+            </div>
+
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="payBank" value="bank_transfer">
+              <label class="form-check-label fw-bold" for="payBank">
+                <i class="bi bi-bank me-2"></i> Chuyển khoản ngân hàng (VietQR)
+              </label>
+              <p class="small text-muted mb-0 ms-4">Quét mã QR qua ứng dụng ngân hàng, xác nhận tự động trong 30 giây.</p>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="payVNPAY" value="vnpay">
+              <label class="form-check-label fw-bold" for="payVNPAY">
+                <i class="bi bi-credit-card me-2"></i> Ví VNPAY / Thẻ ATM Nội Địa
+              </label>
+              <p class="small text-muted mb-0 ms-4">Cổng thanh toán điện tử chuẩn VNPAY QR.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tóm tắt đơn hàng -->
+        <div class="col-lg-5">
+          <div class="card border rounded-0 p-4 bg-light">
+            <h5 class="fw-bold border-bottom pb-2 mb-3">ĐƠN HÀNG CỦA BẠN</h5>
+            <div id="checkoutItemsList" class="mb-3" style="max-height: 300px; overflow-y: auto;">
+              <!-- Render danh sách món -->
+            </div>
+
+            <div class="border-top pt-3">
+              <div class="d-flex justify-content-between mb-2 small">
+                <span>Tạm tính hàng hóa:</span>
+                <span class="fw-bold" id="checkoutSubtotal">0đ</span>
+              </div>
+              <div class="d-flex justify-content-between mb-2 small">
+                <span>Phí vận chuyển tiêu chuẩn:</span>
+                <span class="fw-bold" id="checkoutShipping">0đ</span>
+              </div>
+              <hr>
+              <div class="d-flex justify-content-between mb-4 fs-5">
+                <span class="fw-bold">Tổng thanh toán:</span>
+                <span class="fw-bold text-dark" id="checkoutTotal">0đ</span>
+              </div>
+
+              <button type="submit" class="btn btn-dark w-100 rounded-0 py-3 fw-bold text-uppercase">
+                XÁC NHẬN ĐẶT HÀNG
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <footer class="bg-dark text-white py-4 mt-auto">
+    <div class="container text-center small text-secondary">
+      &copy; 2026 TrendStyle Platform - Đồ án môn học Phát triển phần mềm hướng dịch vụ (PTIT).
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/mock_data.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = AppStorage.getUser();
+      if (user) {
+        document.getElementById("custName").value = user.full_name || user.username;
+        if (user.username === "phamthai") {
+          document.getElementById("custPhone").value = "0912345678";
+          document.getElementById("custEmail").value = "thai.pham@student.ptit.edu.vn";
+          document.getElementById("custAddress").value = "Km10 Nguyễn Trãi, Hà Đông, Hà Nội";
+        }
+      }
+
+      const cart = AppStorage.getCart();
+      if (!cart.items || cart.items.length === 0) {
+        alert("Giỏ hàng của bạn đang trống! Vui lòng chọn sản phẩm trước.");
+        window.location.href = "products.html";
+        return;
+      }
+
+      const itemsContainer = document.getElementById("checkoutItemsList");
+      itemsContainer.innerHTML = cart.items.map(i => `
+        <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+          <div class="d-flex align-items-center">
+            <img src="${i.product_thumbnail}" class="me-2 border" style="width: 45px; height: 55px; object-fit: cover;">
+            <div>
+              <div class="small fw-bold text-truncate" style="max-width: 180px;">${i.product_name}</div>
+              <div class="text-muted small">SL: ${i.quantity} | Size: ${i.selected_size}</div>
+            </div>
+          </div>
+          <span class="small fw-bold">${AppUI.formatMoney(i.subtotal)}</span>
+        </div>
+      `).join("");
+
+      const subtotal = cart.total_price;
+      const shipping = subtotal >= 500000 ? 0 : 30000;
+      const total = subtotal + shipping;
+
+      document.getElementById("checkoutSubtotal").innerText = AppUI.formatMoney(subtotal);
+      document.getElementById("checkoutShipping").innerText = shipping === 0 ? "Miễn phí" : AppUI.formatMoney(shipping);
+      document.getElementById("checkoutTotal").innerText = AppUI.formatMoney(total);
+    });
+
+    function handlePlaceOrder(e) {
+      e.preventDefault();
+      const cart = AppStorage.getCart();
+      const user = AppStorage.getUser();
+      const name = document.getElementById("custName").value.trim();
+      const phone = document.getElementById("custPhone").value.trim();
+      const address = document.getElementById("custAddress").value.trim();
+      const note = document.getElementById("custNote").value.trim();
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+      const subtotal = cart.total_price;
+      const shipping = subtotal >= 500000 ? 0 : 30000;
+      const finalAmount = subtotal + shipping;
+
+      const dateStr = new Date().toISOString().slice(0,10).replace(/-/g, "");
+      const randStr = Math.random().toString(36).substring(2, 6).toUpperCase();
+      const orderCode = `TS-${dateStr}-${randStr}`;
+
+      const newOrder = {
+        id: Date.now(),
+        order_code: orderCode,
+        receiver_name: name,
+        receiver_phone: phone,
+        shipping_address: address,
+        note: note,
+        payment_method: paymentMethod,
+        payment_status: paymentMethod === "cod" ? "unpaid" : "paid",
+        status: "pending",
+        total_amount: subtotal,
+        shipping_fee: shipping,
+        final_amount: finalAmount,
+        created_at: new Date().toISOString().replace("T", " ").substring(0, 19),
+        items: [...cart.items]
+      };
+
+      // Lưu vào LocalStorage danh sách đơn hàng
+      const orders = JSON.parse(localStorage.getItem("trendstyle_orders") || "[]");
+      orders.unshift(newOrder);
+      localStorage.setItem("trendstyle_orders", JSON.stringify(orders));
+
+      // Xóa rỗng giỏ hàng
+      AppStorage.setCart({ items: [], total_quantity: 0, total_price: 0 });
+
+      alert(`🎉 ĐẶT HÀNG THÀNH CÔNG!\nMã đơn hàng của bạn: ${orderCode}\nTổng số tiền: ${AppUI.formatMoney(finalAmount)}\nChúng tôi sẽ sớm liên hệ để giao hàng.`);
+      window.location.href = "orders.html";
+    }
+  </script>
+</body>
+</html>

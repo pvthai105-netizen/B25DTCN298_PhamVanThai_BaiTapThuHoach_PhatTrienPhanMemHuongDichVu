@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi Tiết Bài Viết Thời Trang | TrendStyle</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="bg-dark text-white text-center py-2 small fw-semibold">
+    TẠP CHÍ XU HƯỚNG THỜI TRANG & CẨM NANG PHONG CÁCH 2026
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom py-3">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Trend<span>Style</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.html">Cửa hàng</a></li>
+          <li class="nav-item"><a class="nav-link active" href="news.html">Xu Hướng & Tạp Chí</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center">
+          <a href="cart.html" class="btn btn-link text-dark position-relative me-3 p-0 fs-5">
+            <i class="bi bi-bag"></i>
+            <span id="cartCountBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark" style="font-size: 0.65rem; display:none;">0</span>
+          </a>
+          <div id="navUserArea"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Article Detail Container -->
+  <div class="container py-5" style="max-width: 860px;">
+    <div id="newsDetailContent">
+      <!-- Render nội dung bài viết -->
+    </div>
+
+    <!-- Comments Section (Bình luận tin tức) -->
+    <div class="mt-5 pt-4 border-top">
+      <h4 class="fw-bold mb-4">THẢO LUẬN & BÌNH LUẬN CỦA ĐỘC GIẢ</h4>
+
+      <!-- Form nhập bình luận -->
+      <div class="card border rounded-0 p-4 mb-4 bg-light">
+        <h6 class="fw-bold mb-2">Để lại ý kiến của bạn</h6>
+        <p class="small text-muted mb-3">Tham gia thảo luận về xu hướng thời trang cùng cộng đồng độc giả TrendStyle.</p>
+        
+        <form id="commentForm" onsubmit="handleCommentSubmit(event)">
+          <div class="mb-3">
+            <textarea id="commentContent" class="form-control rounded-0" rows="3" required placeholder="Nhập suy nghĩ hoặc góc nhìn phong cách của bạn..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-dark rounded-0 px-4 btn-sm fw-bold">GỬI BÌNH LUẬN</button>
+        </form>
+      </div>
+
+      <!-- Danh sách bình luận -->
+      <div id="commentsListContainer">
+        <!-- Render danh sách bình luận -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4 mt-auto">
+    <div class="container text-center small text-secondary">
+      &copy; 2026 TrendStyle Platform - Đồ án môn học Phát triển phần mềm hướng dịch vụ (PTIT).
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="js/mock_data.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    let currentArticle = null;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const newsId = parseInt(params.get("id")) || 1;
+      currentArticle = MOCK_NEWS.find(n => n.id === newsId) || MOCK_NEWS[0];
+
+      // Render bài viết
+      document.getElementById("newsDetailContent").innerHTML = `
+        <span class="news-tag">${currentArticle.category_tag}</span>
+        <h1 class="fw-bold mt-2 mb-3" style="line-height: 1.3;">${currentArticle.title}</h1>
+        <div class="d-flex align-items-center gap-3 text-secondary small mb-4 pb-3 border-bottom">
+          <span><i class="bi bi-person me-1"></i> ${currentArticle.author}</span>
+          <span><i class="bi bi-calendar3 me-1"></i> ${currentArticle.created_at}</span>
+          <span><i class="bi bi-eye me-1"></i> ${currentArticle.view_count} lượt xem</span>
+        </div>
+
+        <div class="mb-4">
+          <img src="${currentArticle.thumbnail}" class="img-fluid w-100 rounded-0" style="max-height: 480px; object-fit: cover;" alt="${currentArticle.title}">
+        </div>
+
+        <div class="lead fw-normal text-muted mb-4 fst-italic">
+          "${currentArticle.summary}"
+        </div>
+
+        <div class="article-body lh-lg fs-6 text-dark">
+          ${currentArticle.content}
+        </div>
+      `;
+
+      renderComments();
+    });
+
+    function renderComments() {
+      const container = document.getElementById("commentsListContainer");
+      const list = MOCK_COMMENTS.filter(c => c.news_id === currentArticle.id);
+
+      if (list.length === 0) {
+        container.innerHTML = `<p class="text-muted small">Chưa có bình luận nào cho bài viết này. Hãy là người đầu tiên chia sẻ quan điểm!</p>`;
+        return;
+      }
+
+      container.innerHTML = list.map(c => `
+        <div class="border-bottom pb-3 mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <span class="fw-bold text-dark"><i class="bi bi-person-circle me-1 text-secondary"></i> ${c.user_name}</span>
+            <span class="small text-muted">${c.created_at}</span>
+          </div>
+          <p class="text-secondary small mb-0 mt-1">${c.content}</p>
+        </div>
+      `).join("");
+    }
+
+    function handleCommentSubmit(e) {
+      e.preventDefault();
+      const user = AppStorage.getUser();
+      const content = document.getElementById("commentContent").value.trim();
+
+      const newC = {
+        id: Date.now(),
+        news_id: currentArticle.id,
+        user_name: user ? user.full_name : "Độc giả TrendStyle",
+        content: content,
+        created_at: new Date().toISOString().replace("T", " ").substring(0, 16)
+      };
+
+      MOCK_COMMENTS.unshift(newC);
+      currentArticle.comment_count += 1;
+      renderComments();
+      document.getElementById("commentForm").reset();
+      AppUI.showToast("Bình luận của bạn đã được đăng thành công!");
+    }
+  </script>
+</body>
+</html>
